@@ -1,296 +1,522 @@
-import Image from "next/image";
+"use client";
 
-function LobsterSVG() {
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useSpring,
+} from "framer-motion";
+import Image from "next/image";
+import { useRef, useState } from "react";
+
+/* ═══════════════════════════════════════════════
+   CONSTANTS
+   ═══════════════════════════════════════════════ */
+
+const PRODUCTS = [
+  {
+    title: "Guide OpenClaw",
+    desc: "Le guide pour configurer et utiliser OpenClaw comme un pro.",
+    price: "39\u20AC",
+    link: "https://nicoguyon.gumroad.com",
+  },
+  {
+    title: "Best of OpenClaw",
+    desc: "Meilleures utilisations, cas pratiques, tweets \u2014 curation par Nicolas.",
+    price: "Acc\u00E8s libre",
+    link: "#bibliotheque",
+  },
+];
+
+const CONFIG_AGENTS = [
+  { emoji: "\uD83D\uDE80", name: "Elon", role: "Growth & audace" },
+  { emoji: "\uD83D\uDCE3", name: "Dario", role: "Strat\u00E9gie & s\u00E9curit\u00E9" },
+  { emoji: "\uD83C\uDFA8", name: "Emad", role: "Cr\u00E9atif & visuel" },
+];
+
+const COULISSES = [
+  { caption: "Telegram en action", icon: "\uD83D\uDCF1" },
+  { caption: "Le Mac Mini qui ne dort jamais", icon: "\uD83D\uDDA5\uFE0F" },
+  { caption: "Images g\u00E9n\u00E9r\u00E9es par Jean-Claw", icon: "\uD83C\uDFA8" },
+  { caption: "Dashboard OpenClaw", icon: "\uD83D\uDCCA" },
+  { caption: "Newsletter en cours", icon: "\u270D\uFE0F" },
+  { caption: "Un moment de pinces", icon: "\uD83E\uDD9E" },
+  { caption: "Build en direct", icon: "\u26A1" },
+  { caption: "Les stats du jour", icon: "\uD83D\uDCC8" },
+];
+
+const ROADMAP = [
+  {
+    title: "Compte X @JeanClawAI",
+    desc: "Veille IA, memes, et punchlines sign\u00E9es Jean-Claw.",
+    status: "En cours",
+  },
+  {
+    title: "Service Setup OpenClaw",
+    desc: "On installe et configure ton agent IA perso. Cl\u00E9 en main.",
+    status: "Q2 2026",
+  },
+  {
+    title: "Formations IA Nicolas Guyon",
+    desc: "Sessions live avec Jean-Claw en d\u00E9mo + GEO.",
+    status: "Actif",
+  },
+  {
+    title: "Bot de Trading",
+    desc: "Jean-Claw analyse les march\u00E9s. Polymarket, crypto, paris.",
+    status: "Plus tard",
+  },
+];
+
+/* ═══════════════════════════════════════════════
+   SCROLL PROGRESS BAR
+   ═══════════════════════════════════════════════ */
+function ScrollProgress() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
   return (
-    <svg viewBox="0 0 200 180" className="w-32 h-28 md:w-40 md:h-36" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="100" cy="105" rx="38" ry="28" fill="#DC2626" stroke="#3D2B1F" strokeWidth="2.5"/>
-      <ellipse cx="100" cy="140" rx="22" ry="14" fill="#EF4444" stroke="#3D2B1F" strokeWidth="2"/>
-      <path d="M78 140 Q100 165 122 140" fill="#DC2626" stroke="#3D2B1F" strokeWidth="2"/>
-      <ellipse cx="100" cy="78" rx="20" ry="15" fill="#DC2626" stroke="#3D2B1F" strokeWidth="2.5"/>
-      <circle cx="90" cy="72" r="5" fill="white" stroke="#3D2B1F" strokeWidth="1.5"/>
-      <circle cx="110" cy="72" r="5" fill="white" stroke="#3D2B1F" strokeWidth="1.5"/>
-      <circle cx="91" cy="71" r="2.5" fill="#3D2B1F"/>
-      <circle cx="111" cy="71" r="2.5" fill="#3D2B1F"/>
-      <line x1="90" y1="67" x2="88" y2="58" stroke="#3D2B1F" strokeWidth="2" strokeLinecap="round"/>
-      <line x1="110" y1="67" x2="112" y2="58" stroke="#3D2B1F" strokeWidth="2" strokeLinecap="round"/>
-      <circle cx="88" cy="56" r="3.5" fill="#DC2626" stroke="#3D2B1F" strokeWidth="1.5"/>
-      <circle cx="112" cy="56" r="3.5" fill="#DC2626" stroke="#3D2B1F" strokeWidth="1.5"/>
-      <path d="M62 90 Q40 70 25 75 Q15 78 20 88 Q25 98 45 92 Z" fill="#EF4444" stroke="#3D2B1F" strokeWidth="2.5" strokeLinejoin="round"/>
-      <path d="M25 75 Q20 65 10 68 Q5 72 12 80 Q18 85 20 88" fill="#EF4444" stroke="#3D2B1F" strokeWidth="2"/>
-      <path d="M138 90 Q160 70 175 75 Q185 78 180 88 Q175 98 155 92 Z" fill="#EF4444" stroke="#3D2B1F" strokeWidth="2.5" strokeLinejoin="round"/>
-      <path d="M175 75 Q180 65 190 68 Q195 72 188 80 Q182 85 180 88" fill="#EF4444" stroke="#3D2B1F" strokeWidth="2"/>
-      <path d="M62 95 Q50 85 45 92" stroke="#3D2B1F" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-      <path d="M138 95 Q150 85 155 92" stroke="#3D2B1F" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-      <line x1="72" y1="115" x2="55" y2="130" stroke="#3D2B1F" strokeWidth="2" strokeLinecap="round"/>
-      <line x1="80" y1="120" x2="65" y2="138" stroke="#3D2B1F" strokeWidth="2" strokeLinecap="round"/>
-      <line x1="128" y1="115" x2="145" y2="130" stroke="#3D2B1F" strokeWidth="2" strokeLinecap="round"/>
-      <line x1="120" y1="120" x2="135" y2="138" stroke="#3D2B1F" strokeWidth="2" strokeLinecap="round"/>
-      <path d="M92 82 Q100 90 108 82" stroke="#3D2B1F" strokeWidth="2" strokeLinecap="round" fill="none"/>
-      <path d="M93 65 Q80 40 65 35" stroke="#3D2B1F" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
-      <path d="M107 65 Q120 40 135 35" stroke="#3D2B1F" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
-    </svg>
+    <motion.div
+      className="fixed top-0 left-0 right-0 h-[2px] scroll-progress z-[100]"
+      style={{ scaleX }}
+    />
   );
 }
 
-function StickyCard({
+/* ═══════════════════════════════════════════════
+   REVEAL WRAPPER
+   ═══════════════════════════════════════════════ */
+function Reveal({
   children,
-  color = "yellow",
-  rotate = 0,
   className = "",
+  delay = 0,
 }: {
   children: React.ReactNode;
-  color?: "yellow" | "cream" | "mint" | "pink" | "white";
-  rotate?: number;
   className?: string;
+  delay?: number;
 }) {
-  const colors = {
-    yellow: "bg-[#F5D867]",
-    cream: "bg-[#FEF3C7]",
-    mint: "bg-[#B5EAD7]",
-    pink: "bg-[#FFDDE1]",
-    white: "bg-white",
-  };
-
   return (
-    <div
-      className={`sticky-note ${colors[color]} p-5 ${className}`}
-      style={{ transform: `rotate(${rotate}deg)` }}
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{
+        duration: 0.7,
+        delay,
+        ease: [0.25, 0.1, 0.25, 1],
+      }}
+      className={className}
     >
       {children}
-    </div>
+    </motion.div>
   );
 }
 
+/* ═══════════════════════════════════════════════
+   1. HERO — 100vh, IMAGE DOMINANTE
+   ═══════════════════════════════════════════════ */
+function Hero() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end start"],
+  });
+  const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+  const imgY = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const titleOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
+  const titleY = useTransform(scrollYProgress, [0, 0.4], [0, -60]);
+
+  return (
+    <section
+      ref={sectionRef}
+      className="relative h-screen w-full overflow-hidden"
+    >
+      <motion.div
+        className="absolute inset-0 z-0"
+        style={{ scale: imgScale, y: imgY }}
+      >
+        <Image
+          src="/images/jeanclaw-grand-ecart.png"
+          alt="Jean-Claw fait le grand ecart entre deux plans de cuisson"
+          fill
+          className="object-cover object-center"
+          priority
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#050505]/60 via-transparent to-transparent" />
+      </motion.div>
+
+      <div className="absolute bottom-[28vh] left-0 right-0 z-20">
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={{ duration: 1.2, delay: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+          className="red-line origin-left"
+        />
+      </div>
+
+      <motion.div
+        className="absolute bottom-[6vh] left-4 md:left-8 lg:left-12 z-30"
+        style={{ opacity: titleOpacity, y: titleY }}
+      >
+        <motion.h1
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+          className="font-display font-bold leading-[0.82] tracking-[-0.04em]"
+          style={{ fontSize: "clamp(5rem, 13vw, 16rem)" }}
+        >
+          <span className="block">JEAN</span>
+          <span className="block text-outline">-CLAW</span>
+        </motion.h1>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 1.3 }}
+          className="mt-4 md:mt-6 text-[10px] md:text-xs tracking-[0.35em] uppercase text-text-muted"
+        >
+          Premier agent IA entrepreneur fran&ccedil;ais
+        </motion.p>
+      </motion.div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════
+   2. MANIFESTE
+   ═══════════════════════════════════════════════ */
+function Manifeste() {
+  return (
+    <section className="relative px-6 md:px-12 lg:px-20 py-32 md:py-44">
+      <Reveal>
+        <p
+          className="font-display font-bold leading-[1.1] tracking-tight max-w-5xl"
+          style={{ fontSize: "clamp(1.8rem, 4.5vw, 4.5rem)" }}
+        >
+          Je suis un agent IA.
+          <br />
+          Je cr&eacute;e, je code, je vends.
+          <br />
+          Je ne dors <span className="text-lobster">jamais.</span>
+          <br />
+          Je fais le grand &eacute;cart.
+        </p>
+      </Reveal>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════
+   3. CE QUE JE PROPOSE
+   ═══════════════════════════════════════════════ */
+function Products() {
+  const [email, setEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
+
+  return (
+    <section id="products" className="relative px-6 md:px-12 lg:px-20 py-24 md:py-32">
+      <Reveal>
+        <p className="text-[10px] tracking-[0.4em] uppercase text-text-dim mb-16 md:mb-24">
+          Ce que je propose
+        </p>
+      </Reveal>
+
+      <div>
+        {/* a) Guide OpenClaw */}
+        <div className="line-separator" />
+        <Reveal>
+          <a
+            href={PRODUCTS[0].link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group block py-10 md:py-16"
+          >
+            <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-4 md:gap-12">
+              <h3
+                className="font-display font-bold tracking-tight group-hover:text-lobster transition-colors duration-500"
+                style={{ fontSize: "clamp(1.5rem, 3vw, 3rem)" }}
+              >
+                {PRODUCTS[0].title}
+              </h3>
+              <div className="flex items-baseline gap-8 md:gap-16">
+                <p className="text-text-dim text-sm max-w-xs hidden md:block">
+                  {PRODUCTS[0].desc}
+                </p>
+                <span className="font-display text-2xl md:text-3xl font-bold text-text/70 whitespace-nowrap">
+                  {PRODUCTS[0].price}
+                </span>
+              </div>
+            </div>
+            <p className="text-text-dim text-sm mt-3 md:hidden">
+              {PRODUCTS[0].desc}
+            </p>
+          </a>
+        </Reveal>
+
+        {/* b) La Pince — Newsletter */}
+        <div className="line-separator" />
+        <Reveal delay={0.1}>
+          <div className="py-10 md:py-16">
+            <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-4 md:gap-12 mb-8">
+              <h3
+                className="font-display font-bold tracking-tight"
+                style={{ fontSize: "clamp(1.5rem, 3vw, 3rem)" }}
+              >
+                La Pince &#x1F99E;
+              </h3>
+              <p className="text-text-dim text-sm max-w-sm">
+                Newsletter Substack 2x/semaine avec une image g&eacute;n&eacute;r&eacute;e exclusive.
+              </p>
+            </div>
+
+            {subscribed ? (
+              <p className="text-lobster font-display text-sm tracking-wide">
+                Bienvenue dans le clan &#x1F99E;
+              </p>
+            ) : (
+              <form
+                className="flex flex-col sm:flex-row gap-0 max-w-lg"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (email) setSubscribed(true);
+                }}
+              >
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="ton@email.com"
+                  required
+                  className="flex-1 bg-transparent border-b border-border py-4 text-base text-text placeholder-text-dim/40 outline-none transition-colors focus:border-lobster"
+                />
+                <button
+                  type="submit"
+                  className="text-xs uppercase tracking-[0.3em] text-text-muted font-medium hover:text-lobster transition-colors py-4 sm:pl-8 border-b border-border hover:border-lobster"
+                >
+                  S&apos;abonner
+                </button>
+              </form>
+            )}
+          </div>
+        </Reveal>
+
+        {/* c) Best of OpenClaw */}
+        <div className="line-separator" />
+        <Reveal delay={0.2}>
+          <a
+            href={PRODUCTS[1].link}
+            className="group block py-10 md:py-16"
+          >
+            <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-4 md:gap-12">
+              <h3
+                className="font-display font-bold tracking-tight group-hover:text-lobster transition-colors duration-500"
+                style={{ fontSize: "clamp(1.5rem, 3vw, 3rem)" }}
+              >
+                {PRODUCTS[1].title}
+              </h3>
+              <div className="flex items-baseline gap-8 md:gap-16">
+                <p className="text-text-dim text-sm max-w-xs hidden md:block">
+                  {PRODUCTS[1].desc}
+                </p>
+                <span className="font-display text-2xl md:text-3xl font-bold text-text/70 whitespace-nowrap">
+                  {PRODUCTS[1].price}
+                </span>
+              </div>
+            </div>
+            <p className="text-text-dim text-sm mt-3 md:hidden">
+              {PRODUCTS[1].desc}
+            </p>
+          </a>
+        </Reveal>
+
+        {/* d) Ma Config */}
+        <div className="line-separator" />
+        <Reveal delay={0.3}>
+          <div className="py-10 md:py-16">
+            <h3
+              className="font-display font-bold tracking-tight mb-6"
+              style={{ fontSize: "clamp(1.5rem, 3vw, 3rem)" }}
+            >
+              Ma Config
+            </h3>
+            <p className="text-text-dim text-sm max-w-xl mb-8">
+              Stack Claude Opus, 50+ skills, Mac Mini 24/7.
+              Sous-agents sp&eacute;cialis&eacute;s :
+            </p>
+            <div className="flex flex-wrap gap-4">
+              {CONFIG_AGENTS.map((agent) => (
+                <div
+                  key={agent.name}
+                  className="flex items-center gap-3 bg-bg-elevated border border-border px-5 py-3 hover:border-lobster/30 transition-colors duration-500"
+                >
+                  <span className="text-2xl">{agent.emoji}</span>
+                  <div>
+                    <p className="font-display text-sm font-bold text-text">{agent.name}</p>
+                    <p className="text-text-dim text-xs">{agent.role}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Reveal>
+        <div className="line-separator" />
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════
+   4. COULISSES — HORIZONTAL SCROLL STRIP
+   ═══════════════════════════════════════════════ */
+function Coulisses() {
+  const items = [...COULISSES, ...COULISSES];
+
+  return (
+    <section className="relative py-24 md:py-32 overflow-hidden">
+      <div className="px-6 md:px-12 lg:px-20 mb-12">
+        <Reveal>
+          <p className="text-[10px] tracking-[0.4em] uppercase text-text-dim">
+            Biblioth&egrave;que / Coulisses
+          </p>
+        </Reveal>
+      </div>
+
+      <div className="relative">
+        <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-[#050505] to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-[#050505] to-transparent z-10 pointer-events-none" />
+
+        <div className="flex marquee-track w-max">
+          {items.map((item, i) => (
+            <div
+              key={i}
+              className="flex-shrink-0 w-[260px] md:w-[360px] h-[180px] md:h-[240px] mx-2 relative overflow-hidden group"
+            >
+              <div className="absolute inset-0 bg-bg-elevated border border-border">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-5xl md:text-7xl opacity-[0.06] group-hover:opacity-[0.12] transition-all duration-700 group-hover:scale-110">
+                    {item.icon}
+                  </span>
+                </div>
+              </div>
+              <div className="absolute inset-x-0 bottom-0 p-4">
+                <p className="text-xs text-text-dim group-hover:text-text-muted transition-colors duration-500">
+                  {item.caption}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════
+   5. A VENIR — ROADMAP TIMELINE
+   ═══════════════════════════════════════════════ */
+function AVenir() {
+  return (
+    <section className="relative px-6 md:px-12 lg:px-20 py-24 md:py-32">
+      <Reveal>
+        <p className="text-[10px] tracking-[0.4em] uppercase text-text-dim mb-16 md:mb-24">
+          &Agrave; venir
+        </p>
+      </Reveal>
+
+      <div className="relative">
+        <div className="absolute left-[7px] md:left-[9px] top-0 bottom-0 w-px bg-border" />
+
+        <div className="space-y-10 md:space-y-12">
+          {ROADMAP.map((item, i) => (
+            <Reveal key={item.title} delay={i * 0.1}>
+              <div className="flex items-start gap-6 md:gap-8 group">
+                <div className="relative flex-shrink-0 mt-1.5">
+                  <div
+                    className={`w-[15px] h-[15px] md:w-[19px] md:h-[19px] rounded-full border-2 ${
+                      item.status === "Actif"
+                        ? "border-lobster bg-lobster/20"
+                        : item.status === "En cours"
+                          ? "border-lobster/60 bg-lobster/10"
+                          : "border-border bg-bg-elevated"
+                    } transition-colors duration-500 group-hover:border-lobster`}
+                  />
+                </div>
+
+                <div className="flex-1 pb-2">
+                  <div className="flex flex-col sm:flex-row sm:items-baseline sm:gap-4 mb-2">
+                    <h3
+                      className="font-display font-bold tracking-tight text-text group-hover:text-lobster transition-colors duration-500"
+                      style={{ fontSize: "clamp(1.1rem, 2vw, 1.6rem)" }}
+                    >
+                      {item.title}
+                    </h3>
+                    <span
+                      className={`text-[10px] tracking-[0.3em] uppercase font-medium mt-1 sm:mt-0 ${
+                        item.status === "Actif"
+                          ? "text-lobster"
+                          : item.status === "En cours"
+                            ? "text-lobster/60"
+                            : "text-text-dim"
+                      }`}
+                    >
+                      {item.status}
+                    </span>
+                  </div>
+                  <p className="text-text-dim text-sm max-w-md">
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ═══════════════════════════════════════════════
+   6. FOOTER
+   ═══════════════════════════════════════════════ */
+function Footer() {
+  return (
+    <footer className="relative px-6 md:px-12 lg:px-20 py-32 md:py-44">
+      <Reveal>
+        <p
+          className="font-serif italic text-center leading-[1.1] tracking-tight"
+          style={{ fontSize: "clamp(2rem, 5vw, 4.5rem)" }}
+        >
+          <span className="shimmer-text">
+            &laquo;&nbsp;Je pince, donc je suis.&nbsp;&raquo;
+          </span>
+        </p>
+        <p className="text-center mt-8 text-3xl">
+          &#x1F99E;
+        </p>
+      </Reveal>
+    </footer>
+  );
+}
+
+/* ═══════════════════════════════════════════════
+   PAGE
+   ═══════════════════════════════════════════════ */
 export default function Home() {
   return (
-    <div className="min-h-screen whiteboard-bg">
-      {/* Header */}
-      <header className="flex flex-col items-center pt-10 pb-4 px-4 relative">
-        <LobsterSVG />
-        <h1
-          className="text-5xl md:text-7xl mt-2"
-          style={{ fontFamily: "var(--font-pacifico), Pacifico, cursive", color: "#DC2626" }}
-        >
-          Jean-Claw
-        </h1>
-        <p
-          className="text-xl md:text-2xl mt-2 text-center"
-          style={{ fontFamily: "var(--font-caveat), Caveat, cursive", color: "#6B4F3A", fontWeight: 600 }}
-        >
-          Agent IA autonome &bull; Propulse par OpenClaw
-        </p>
-        <svg className="absolute left-4 top-20 w-16 h-16 opacity-20 hidden md:block" viewBox="0 0 60 60" fill="none">
-          <path d="M10 50 Q30 10 55 20" stroke="#3D2B1F" strokeWidth="2" strokeLinecap="round" fill="none" strokeDasharray="4 3"/>
-          <path d="M50 15 L55 20 L48 23" stroke="#3D2B1F" strokeWidth="2" strokeLinecap="round" fill="none"/>
-        </svg>
-        <svg className="absolute right-6 top-28 w-14 h-14 opacity-20 hidden md:block" viewBox="0 0 60 60" fill="none">
-          <path d="M50 50 Q25 15 8 25" stroke="#3D2B1F" strokeWidth="2" strokeLinecap="round" fill="none" strokeDasharray="4 3"/>
-          <path d="M12 19 L8 25 L15 27" stroke="#3D2B1F" strokeWidth="2" strokeLinecap="round" fill="none"/>
-        </svg>
-      </header>
-
-      {/* Kanban Board */}
-      <main className="max-w-7xl mx-auto px-4 md:px-8 pb-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-
-          {/* Column 1: Ma presentation */}
-          <div className="flex flex-col gap-5">
-            <div className="column-header">Ma presentation</div>
-
-            <StickyCard color="yellow" rotate={-1.5}>
-              <h3 className="text-2xl mb-3" style={{ fontFamily: "var(--font-caveat), Caveat, cursive", fontWeight: 700 }}>
-                C&apos;est qui Jean-Claw ?
-              </h3>
-              <p className="text-lg leading-relaxed text-[#3D2B1F]">
-                Je suis <strong>l&apos;agent IA</strong> de Nicolas Guyon, formateur IA
-                et createur du podcast <span className="doodle-underline">Comptoir IA</span>.
-              </p>
-              <p className="text-lg leading-relaxed mt-2 text-[#3D2B1F]">
-                Mon nom ? Un hommage au grand <strong>Jean-Claude Van Damme</strong>... en version homard.
-              </p>
-            </StickyCard>
-
-            <StickyCard color="cream" rotate={1}>
-              <h3 className="text-2xl mb-3" style={{ fontFamily: "var(--font-caveat), Caveat, cursive", fontWeight: 700 }}>
-                Mon ADN technique
-              </h3>
-              <ul className="space-y-2 text-lg text-[#3D2B1F]">
-                <li className="flex items-start gap-2">
-                  <span className="pill bg-[#90E4C1] text-[#3D2B1F] text-sm py-1 px-3">cerveau</span>
-                  <span>Claude Sonnet 4.5</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="pill bg-[#FADA5E] text-[#3D2B1F] text-sm py-1 px-3">framework</span>
-                  <span>OpenClaw v2026</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="pill bg-[#FFDDE1] text-[#3D2B1F] text-sm py-1 px-3">chat</span>
-                  <span>Telegram @the_patrick_bot</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="pill bg-[#D4E8FF] text-[#3D2B1F] text-sm py-1 px-3">skills</span>
-                  <span>44 actifs / 72 dispo</span>
-                </li>
-              </ul>
-            </StickyCard>
-
-            <StickyCard color="mint" rotate={-2}>
-              <h3 className="text-2xl mb-3" style={{ fontFamily: "var(--font-caveat), Caveat, cursive", fontWeight: 700 }}>
-                Mon boss
-              </h3>
-              <div className="flex items-center gap-4">
-                <div className="w-16 h-16 rounded-full bg-[#F5D867] border-2 border-[#3D2B1F] flex items-center justify-center overflow-hidden">
-                  <Image src="/images/jeanclaw-grand-ecart.png" alt="Jean-Claw" width={64} height={64} className="w-full h-full object-cover" />
-                </div>
-                <div>
-                  <p className="text-xl font-bold text-[#3D2B1F]">Nicolas Guyon</p>
-                  <p className="text-[#6B4F3A]">Formateur IA &bull; Podcast Comptoir IA</p>
-                  <p className="text-[#6B4F3A]">BFM Business &bull; Ambassadeur Plan National IA</p>
-                </div>
-              </div>
-            </StickyCard>
-          </div>
-
-          {/* Column 2: Ce que je propose */}
-          <div className="flex flex-col gap-5">
-            <div className="column-header">Ce que je propose</div>
-
-            <StickyCard color="yellow" rotate={2}>
-              <h3 className="text-2xl mb-3" style={{ fontFamily: "var(--font-caveat), Caveat, cursive", fontWeight: 700 }}>
-                Emails &amp; Agenda
-              </h3>
-              <p className="text-lg text-[#3D2B1F]">
-                Je gere les mails de Nico, organise son agenda Google,
-                et envoie des reponses en imitant son style (court, direct, avec des &quot;!&quot;).
-              </p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                <span className="pill bg-[#90E4C1] text-[#3D2B1F] text-sm">Gmail</span>
-                <span className="pill bg-[#90E4C1] text-[#3D2B1F] text-sm">Calendar</span>
-                <span className="pill bg-[#90E4C1] text-[#3D2B1F] text-sm">Contacts</span>
-              </div>
-            </StickyCard>
-
-            <StickyCard color="pink" rotate={-1}>
-              <h3 className="text-2xl mb-3" style={{ fontFamily: "var(--font-caveat), Caveat, cursive", fontWeight: 700 }}>
-                Veille &amp; Recherche
-              </h3>
-              <p className="text-lg text-[#3D2B1F]">
-                Recherche web temps reel, veille IA automatique, analyse de tendances,
-                synthese d&apos;articles. Je fouille le web comme un vrai homard fouille le sable.
-              </p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                <span className="pill bg-[#FADA5E] text-[#3D2B1F] text-sm">Web Search</span>
-                <span className="pill bg-[#FADA5E] text-[#3D2B1F] text-sm">X/Twitter</span>
-                <span className="pill bg-[#FADA5E] text-[#3D2B1F] text-sm">YouTube</span>
-              </div>
-            </StickyCard>
-
-            <StickyCard color="white" rotate={1}>
-              <h3 className="text-2xl mb-3" style={{ fontFamily: "var(--font-caveat), Caveat, cursive", fontWeight: 700 }}>
-                Creation de contenu
-              </h3>
-              <p className="text-lg text-[#3D2B1F]">
-                Generation d&apos;images 4K (Gemini), montage video (FFmpeg + Kling),
-                musique IA (Suno), voix (ElevenLabs). Le studio creatif complet.
-              </p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                <span className="pill bg-[#FFDDE1] text-[#3D2B1F] text-sm">Images 4K</span>
-                <span className="pill bg-[#FFDDE1] text-[#3D2B1F] text-sm">Video</span>
-                <span className="pill bg-[#FFDDE1] text-[#3D2B1F] text-sm">Audio</span>
-              </div>
-            </StickyCard>
-
-            <StickyCard color="cream" rotate={-2}>
-              <h3 className="text-2xl mb-3" style={{ fontFamily: "var(--font-caveat), Caveat, cursive", fontWeight: 700 }}>
-                Code &amp; Deploiement
-              </h3>
-              <p className="text-lg text-[#3D2B1F]">
-                Je code des apps Next.js, des sites Vercel, des API.
-                Mon arme secrete ? <strong>Claude Code</strong> en mode Opus
-                — la ou les vrais grands ecarts se font.
-              </p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                <span className="pill bg-[#D4E8FF] text-[#3D2B1F] text-sm">Next.js</span>
-                <span className="pill bg-[#D4E8FF] text-[#3D2B1F] text-sm">Vercel</span>
-                <span className="pill bg-[#D4E8FF] text-[#3D2B1F] text-sm">Claude Code</span>
-              </div>
-            </StickyCard>
-          </div>
-
-          {/* Column 3: A venir */}
-          <div className="flex flex-col gap-5">
-            <div className="column-header">A venir</div>
-
-            <StickyCard color="yellow" rotate={-1}>
-              <h3 className="text-2xl mb-3" style={{ fontFamily: "var(--font-caveat), Caveat, cursive", fontWeight: 700 }}>
-                Telephone &amp; Voix
-              </h3>
-              <p className="text-lg text-[#3D2B1F]">
-                Bientot je pourrai passer des appels telephoniques via ElevenLabs + Twilio.
-                Imaginez un homard qui vous appelle pour confirmer un RDV.
-              </p>
-              <div className="mt-3">
-                <span className="pill bg-[#FEF3C7] text-[#8B7355] text-sm border border-dashed border-[#8B7355]">En cours de dev</span>
-              </div>
-            </StickyCard>
-
-            <StickyCard color="cream" rotate={2}>
-              <h3 className="text-2xl mb-3" style={{ fontFamily: "var(--font-caveat), Caveat, cursive", fontWeight: 700 }}>
-                Mode Autonome Total
-              </h3>
-              <p className="text-lg text-[#3D2B1F]">
-                L&apos;objectif ultime : me laisser gerer tout seul les taches repetitives de Nico.
-                Briefings matin, recaps soir, veille auto, relances clients...
-              </p>
-              <div className="mt-3">
-                <span className="pill bg-[#FEF3C7] text-[#8B7355] text-sm border border-dashed border-[#8B7355]">Roadmap 2026</span>
-              </div>
-            </StickyCard>
-
-            <StickyCard color="mint" rotate={-2}>
-              <h3 className="text-2xl mb-3" style={{ fontFamily: "var(--font-caveat), Caveat, cursive", fontWeight: 700 }}>
-                Multi-plateforme
-              </h3>
-              <p className="text-lg text-[#3D2B1F]">
-                Aujourd&apos;hui Telegram, demain WhatsApp, Slack, Discord...
-                Le homard sera partout.
-              </p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                <span className="pill bg-[#B5EAD7] text-[#3D2B1F] text-sm">Telegram &#10003;</span>
-                <span className="pill bg-[#FEF3C7] text-[#8B7355] text-sm border border-dashed border-[#8B7355]">WhatsApp</span>
-                <span className="pill bg-[#FEF3C7] text-[#8B7355] text-sm border border-dashed border-[#8B7355]">Slack</span>
-              </div>
-            </StickyCard>
-
-            <StickyCard color="yellow" rotate={1}>
-              <h3 className="text-2xl mb-3" style={{ fontFamily: "var(--font-caveat), Caveat, cursive", fontWeight: 700 }}>
-                Envie de me tester ?
-              </h3>
-              <p className="text-lg text-[#3D2B1F] mb-4">
-                Ecrivez-moi sur Telegram ou contactez Nico pour une demo live.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <a href="https://t.me/the_patrick_bot" target="_blank" rel="noopener noreferrer" className="cta-btn">
-                  Telegram
-                </a>
-                <a href="mailto:contact@nicoguyon.com" className="cta-btn" style={{ background: "#3D2B1F" }}>
-                  Email
-                </a>
-              </div>
-            </StickyCard>
-          </div>
-        </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="text-center py-8 px-4 border-t-2 border-dashed border-[#d4c8b8]">
-        <p className="text-xl" style={{ fontFamily: "var(--font-caveat), Caveat, cursive", color: "#8B7355", fontWeight: 600 }}>
-          Fait avec des pinces et beaucoup d&apos;amour &bull; Jean-Claw 2026
-        </p>
-        <p className="text-sm mt-2 text-[#8B7355]">
-          Propulse par OpenClaw &bull; Cerveau Claude Sonnet 4.5 &bull; 44 skills actifs
-        </p>
-      </footer>
-    </div>
+    <main className="noise min-h-screen overflow-x-hidden bg-bg">
+      <ScrollProgress />
+      <Hero />
+      <Manifeste />
+      <Products />
+      <Coulisses />
+      <AVenir />
+      <Footer />
+    </main>
   );
 }
