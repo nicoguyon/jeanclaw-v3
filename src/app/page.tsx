@@ -67,7 +67,7 @@ function Hero() {
         className="absolute inset-0"
       >
         <Image
-          src="/images/jeanclaw-grand-ecart.png"
+          src="/images/jeanclaw-grand-ecart.jpg"
           alt="Jean-Claw — le grand écart"
           fill
           priority
@@ -458,90 +458,68 @@ function Offers() {
    BIBLIOTHEQUE / COULISSES
    ═══════════════════════════════════════════════════════ */
 const gallery = [
-  {
-    label: "Échanges Telegram",
-    desc: "Conversations quotidiennes avec Jean-Claw",
-    placeholder: "💬",
-  },
-  {
-    label: "Mac Mini 24/7",
-    desc: "Le cerveau qui ne dort jamais",
-    placeholder: "🖥️",
-  },
-  {
-    label: "Photo du jour",
-    desc: "Générée chaque matin par Jean-Claw",
-    placeholder: "📸",
-  },
-  {
-    label: "Tweets viraux",
-    desc: "Le meilleur du compte @JeanClawAI",
-    placeholder: "🐦",
-  },
-  {
-    label: "Prompts secrets",
-    desc: "Les instructions qui font la différence",
-    placeholder: "🔑",
-  },
-  {
-    label: "Fails épiques",
-    desc: "Quand Jean-Claw déraille (et c'est drôle)",
-    placeholder: "💥",
-  },
+  { src: "/images/jeanclaw-grand-ecart.jpg", caption: "Le Grand \u00C9cart" },
+  { src: "/images/jeanclaw-hero.jpg", caption: "Jean-Claw, version hero" },
+  { src: "/images/fontainebleau-climbing.jpg", caption: "Escalade \u00E0 Fontainebleau" },
+  { src: "/images/famille-fontainebleau.jpg", caption: "Famille \u00E0 Fontainebleau" },
+  { src: "/images/nico-portrait.jpg", caption: "Portrait de Nico" },
+  { src: "/images/nico-corvette-paris.jpg", caption: "Nico \u00E0 Paris" },
+  { src: "/images/nico-formation-mircap.jpg", caption: "Formation en action" },
 ];
 
 function Bibliotheque() {
   return (
-    <Section id="bibliotheque" className="px-6 py-24 md:px-16 lg:px-24">
-      <motion.div variants={fadeUp} custom={0} className="mb-16">
-        <span
-          className="mb-3 block text-sm font-semibold tracking-[0.2em] uppercase text-[#E87722]"
-          style={{ fontFamily: "var(--font-space)" }}
-        >
-          Bibliothèque
-        </span>
-        <h2
-          className="text-4xl font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl"
-          style={{ fontFamily: "var(--font-syne)" }}
-        >
-          Les coulisses
-          <br />
-          <span className="text-white/30">de la bête.</span>
-        </h2>
-      </motion.div>
+    <Section id="bibliotheque" className="py-24">
+      <div className="px-6 md:px-16 lg:px-24">
+        <motion.div variants={fadeUp} custom={0} className="mb-16">
+          <span
+            className="mb-3 block text-sm font-semibold tracking-[0.2em] uppercase text-[#E87722]"
+            style={{ fontFamily: "var(--font-space)" }}
+          >
+            Bibliothèque
+          </span>
+          <h2
+            className="text-4xl font-extrabold tracking-tight text-white md:text-5xl lg:text-6xl"
+            style={{ fontFamily: "var(--font-syne)" }}
+          >
+            Les coulisses
+            <br />
+            <span className="text-white/30">de la bête.</span>
+          </h2>
+        </motion.div>
+      </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <motion.div
+        variants={fadeUp}
+        custom={1}
+        className="gallery-scroll flex gap-5 overflow-x-auto px-6 pb-6 md:px-16 lg:px-24"
+      >
         {gallery.map((item, i) => (
           <motion.div
-            key={item.label}
+            key={item.src}
             variants={fadeUp}
             custom={i + 1}
-            className="group relative flex aspect-[4/3] flex-col items-center justify-center overflow-hidden rounded-2xl border border-white/[0.04] bg-[#0a0a0a] transition-all duration-500 hover:border-white/[0.1] hover:bg-[#0d0d0d]"
+            className="group shrink-0"
           >
-            {/* Placeholder emoji */}
-            <span className="mb-4 text-5xl opacity-30 transition-all duration-500 group-hover:scale-110 group-hover:opacity-60">
-              {item.placeholder}
-            </span>
-            <span
-              className="text-sm font-semibold text-white/50 transition-colors group-hover:text-white/70"
+            <div className="relative h-[280px] w-[380px] overflow-hidden rounded-2xl border border-white/[0.06] md:h-[320px] md:w-[440px]">
+              <Image
+                src={item.src}
+                alt={item.caption}
+                fill
+                className="object-cover transition-all duration-500 group-hover:scale-[1.03] group-hover:brightness-110"
+                sizes="440px"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            </div>
+            <p
+              className="mt-3 text-center text-sm font-medium text-white/50 transition-colors group-hover:text-white/70"
               style={{ fontFamily: "var(--font-space)" }}
             >
-              {item.label}
-            </span>
-            <span
-              className="mt-1 text-xs text-white/20"
-              style={{ fontFamily: "var(--font-jakarta)" }}
-            >
-              {item.desc}
-            </span>
-
-            {/* Coming soon badge */}
-            <div className="absolute right-3 top-3 rounded-full bg-white/5 px-2.5 py-1 text-[10px] font-medium tracking-wider uppercase text-white/20">
-              Bientôt
-            </div>
+              {item.caption}
+            </p>
           </motion.div>
         ))}
-      </div>
+      </motion.div>
     </Section>
   );
 }
@@ -653,6 +631,24 @@ function Footer() {
   return (
     <footer className="border-t border-white/[0.04] px-6 py-16 md:px-16 lg:px-24">
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-8 text-center">
+        {/* Liens utiles */}
+        <motion.nav
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-white/25"
+          style={{ fontFamily: "var(--font-space)" }}
+        >
+          <a href="#newsletter" className="transition-colors hover:text-[#e63627]">📬 La Pince</a>
+          <a href="https://nicoguyon.gumroad.com/l/guide-ia-solopreneurs" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-[#e63627]">📖 Guide OpenClaw</a>
+          <a href="#best-of" className="transition-colors hover:text-[#e63627]">🏆 Best of OpenClaw</a>
+          <a href="#config" className="transition-colors hover:text-[#e63627]">⚙️ Ma Config</a>
+          <a href="https://nicoguyon.substack.com" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-[#e63627]">🎓 Formations IA</a>
+          <a href="https://twitter.com/JeanClawAI" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-[#e63627]">🐦 @JeanClawAI</a>
+          <a href="https://jean-claw.ai" className="transition-colors hover:text-[#e63627]">🦞 jean-claw.ai</a>
+        </motion.nav>
+
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
