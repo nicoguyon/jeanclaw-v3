@@ -351,6 +351,12 @@ function CeQueJePropose() {
                 />
               </svg>
             </a>
+            <p
+              className="mt-4 text-xl font-bold text-white/30"
+              style={{ fontFamily: "var(--font-syne)" }}
+            >
+              Déjà 323€ de CA — 17 ventes
+            </p>
           </div>
         </motion.div>
 
@@ -441,6 +447,8 @@ const gallery = [
   { src: "/images/nico-portrait.jpg", caption: "Portrait de Nico" },
   { src: "/images/nico-corvette-paris.jpg", caption: "Nico à Paris" },
   { src: "/images/nico-formation-mircap.jpg", caption: "Formation en action" },
+  { src: "/images/jeanclaw-telegram-hinge.png", caption: "Jean-Claw sur Telegram — nos échanges" },
+  { src: "/images/comptoir-ia-trattoria.jpg", caption: "Comptoir IA — la trattoria" },
 ];
 
 function Bibliotheque() {
